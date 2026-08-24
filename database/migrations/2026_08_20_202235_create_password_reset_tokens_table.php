@@ -6,20 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->uuid('id')->primary();
+
+            $table->foreignUuid('admin_id')
+                ->constrained('admins')
+                ->restrictOnDelete();
+
+            $table->string('token')->unique();
+
+            $table->timestampTz('expires_at');
+
+            $table->timestampTz('used_at')->nullable();
+
+            $table->timestampTz('created_at')->useCurrent();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('password_reset_tokens');

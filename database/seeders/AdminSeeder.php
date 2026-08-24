@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
 
 class AdminSeeder extends Seeder
 {
@@ -12,6 +13,11 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Admin::create([
+            'full_name' => 'Ali Africa Admin',
+            'email' => 'admin@aliafrica.com',
+            'password_hash' => Hash::make('Admin@12345'),
+            'is_active' => true,
+        ]);
     }
 }

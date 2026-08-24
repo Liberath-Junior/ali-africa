@@ -6,22 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('subcategories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->text('additional_info')->nullable()->after('delivery_address');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('subcategories');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('additional_info');
+        });
     }
 };
